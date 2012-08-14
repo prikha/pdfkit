@@ -32,7 +32,10 @@ class PDFKit
   def command(path = nil)
     args = [executable]
     args += @options.to_a.flatten.compact
-    args << '--quiet'
+    args.map!{|e| e.is_a?(Hash) ? e.to_a.flatten.compact : e }
+    args.flatten!
+    args.insert(1,"--use-xserver")
+    #args << '--quiet'
 
     if @source.html?
       args << '-' # Get HTML from stdin
@@ -41,7 +44,6 @@ class PDFKit
     end
 
     args << (path || '-') # Write to file or stdout
-
     args.map {|arg| %Q{"#{arg.gsub('"', '\"')}"}}
   end
 
@@ -60,6 +62,8 @@ class PDFKit
 
     args = command(path)
     invoke = args.join(' ')
+
+    puts invoke
 
     result = IO.popen(invoke, "wb+") do |pdf|
       pdf.puts(@source.to_s) if @source.html?
@@ -115,8 +119,13 @@ class PDFKit
 
       options.each do |key, value|
         next if !value
-        normalized_key = "--#{normalize_arg key}"
-        normalized_options[normalized_key] = normalize_value(value)
+        if value.is_a?(Hash)
+          normalized_key = "#{normalize_arg key}"
+          normalized_options[normalized_key]=normalize_options(value)
+        else
+          normalized_key = "--#{normalize_arg key}"
+          normalized_options[normalized_key] = normalize_value(value)
+        end
       end
       normalized_options
     end
