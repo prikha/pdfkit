@@ -24,6 +24,9 @@ class PDFKit
 
     @options = PDFKit.configuration.default_options.merge(options)
     @options.merge! find_options_in_meta(url_file_or_html) unless source.url?
+    buffer=@options.select{|k,v| !v.is_a?(Hash)}
+    special=@options.select{|k,v| v.is_a?(Hash)}
+    @options=buffer.merge(special)
     @options = normalize_options(@options)
 
     raise NoExecutableError.new unless File.exists?(PDFKit.configuration.wkhtmltopdf)
@@ -34,7 +37,7 @@ class PDFKit
     args += @options.to_a.flatten.compact
     args.map!{|e| e.is_a?(Hash) ? e.to_a.flatten.compact : e }
     args.flatten!
-    args.insert(1,"--use-xserver")
+    args  .insert(1,"--use-xserver")
     #args << '--quiet'
 
     if @source.html?
