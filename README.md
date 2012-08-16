@@ -1,22 +1,25 @@
+#This is a fork of original [pdfkit](http://github.com/pdfkit/pdfkit) but is rewritten to work with newer versions of *wkhtmltopdf* binary
 # PDFKit
 
 Create PDFs using plain old HTML+CSS. Uses [wkhtmltopdf](http://github.com/antialize/wkhtmltopdf) on the back-end which renders HTML using Webkit.
-
+Be aware of using versions compatible with new options described in [documentation](http://madalgo.au.dk/~jakobt/wkhtmltoxdoc/wkhtmltopdf_0.10.0_rc2-doc.html)
+Those versions are (as far as i know) 0.10.2 and higher
 ## Install
 
 ### PDFKit
 ```sh
-gem install pdfkit
+    gem install pdfkit
 ```
 ### wkhtmltopdf
 
 1. Install by hand (recommended):
 
     <https://github.com/pdfkit/pdfkit/wiki/Installing-WKHTMLTOPDF>
+    ***CHECK THE SUPPORTED VERSIONS ABOVE***
 
 2.  Try using the wkhtmltopdf-binary gem (mac + linux i386)
 
-        gem install wkhtmltopdf-binary
+    gem install wkhtmltopdf-binary
 
 *Note:* The automated installer has been removed.
 
@@ -47,12 +50,31 @@ If you're on Windows or you installed wkhtmltopdf by hand to a location other th
 ```ruby
     # config/initializers/pdfkit.rb
     PDFKit.configure do |config|
-      # config.wkhtmltopdf = '/path/to/wkhtmltopdf'
-      # config.default_options = {
-      #   :page_size => 'Legal',
-      #   :print_media_type => true
-      # }
-      # config.root_url = "http://localhost" # Use only if your external hostname is unavailable on the server.
+       config.wkhtmltopdf = '/path/to/wkhtmltopdf'
+       config.default_options = {
+        #here goes global options
+        :print_media_type => true
+        :page_size     => 'Letter',
+        :margin_top    => '0.7in',
+        :margin_right  => '0.5in',
+        :margin_bottom => '0.7in',
+        :margin_left   => '0.5in',
+        :footer_spacing  =>   5,
+        :header_spacing  =>   5,
+        :page=>{
+                #here you can specifiy page-specific options
+                #every option specified inside html-document
+                #inside meta-tags would go here
+                }
+        :cover=>{
+                :input=>cover
+                },
+        :toc => {
+                :toc_header_text=>"Custom TOC header",
+                :disable_toc_links=> true
+                 }
+       }
+       config.root_url = "http://localhost" # Use only if your external hostname is unavailable on the server.
     end
 ```
 
