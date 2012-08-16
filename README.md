@@ -5,9 +5,9 @@ Create PDFs using plain old HTML+CSS. Uses [wkhtmltopdf](http://github.com/antia
 ## Install
 
 ### PDFKit
-
-    gem install pdfkit
-
+```sh
+gem install pdfkit
+```
 ### wkhtmltopdf
 
 1. Install by hand (recommended):
@@ -44,7 +44,7 @@ Create PDFs using plain old HTML+CSS. Uses [wkhtmltopdf](http://github.com/antia
 ## Configuration
 
 If you're on Windows or you installed wkhtmltopdf by hand to a location other than /usr/local/bin you will need to tell PDFKit where the binary is. You can configure PDFKit like so:
-
+```ruby
     # config/initializers/pdfkit.rb
     PDFKit.configure do |config|
       # config.wkhtmltopdf = '/path/to/wkhtmltopdf'
@@ -54,6 +54,7 @@ If you're on Windows or you installed wkhtmltopdf by hand to a location other th
       # }
       # config.root_url = "http://localhost" # Use only if your external hostname is unavailable on the server.
     end
+```
 
 ## Middleware
 
@@ -62,11 +63,11 @@ PDFKit comes with a middleware that allows users to get a PDF view of any page o
 ### Middleware Setup
 
 **Non-Rails Rack apps**
-
+```ruby
     # in config.ru
     require 'pdfkit'
     use PDFKit::Middleware
-
+```
 **Rails apps**
 
     # in application.rb(Rails3) or environment.rb(Rails2)
