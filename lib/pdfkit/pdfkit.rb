@@ -35,9 +35,12 @@ class PDFKit
   def command(path = nil)
     args = [executable]
     args += @options.to_a.flatten.compact
+    #flatten nested hashes
     args.map!{|e| e.is_a?(Hash) ? e.to_a.flatten.compact : e }
+    #a=args.map!{|a| a=="--cover" ? "cover" : a }
     args.flatten!
-    args  .insert(1,"--use-xserver")
+    args.delete_if{|e| e=="--input"}
+    args.insert(1,"--use-xserver")
     #args << '--quiet'
 
     if @source.html?
