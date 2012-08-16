@@ -25,7 +25,7 @@ class PDFKit
     @options = PDFKit.configuration.default_options.merge(options)
     #add default options here to clarify the walkthrough
     @options[:use_xserver]= true
-    @options[:quiet]= true
+    #@options[:quiet]= true
     #force page section to be created
     @options[:page]={}
     #fetch page-defined options into page section options
