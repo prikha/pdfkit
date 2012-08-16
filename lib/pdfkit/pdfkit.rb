@@ -23,11 +23,19 @@ class PDFKit
     @stylesheets = []
 
     @options = PDFKit.configuration.default_options.merge(options)
+    #add default options here to clarify the walkthrough
+    @options[:use_xserver]= true
+    @options[:quiet]= true
+    #force page section to be created
     @options[:page]={}
+    #fetch page-defined options into page section options
     @options[:page].merge! find_options_in_meta(url_file_or_html) unless source.url?
+    #split global options from nested to merge then back but in different order
     buffer=@options.select{|k,v| !v.is_a?(Hash)}
     special=@options.select{|k,v| v.is_a?(Hash)}
+    #should preccess every portion of options separately, but for now this will go
     @options=buffer.merge(special)
+    #proccess the whole @options mega-hash
     @options = normalize_options(@options)
 
     raise NoExecutableError.new unless File.exists?(PDFKit.configuration.wkhtmltopdf)
@@ -35,22 +43,22 @@ class PDFKit
 
   def command(path = nil)
     args = [executable]
+    #flatten first level
     args += @options.to_a.flatten.compact
     #flatten nested hashes
     args.map!{|e| e.is_a?(Hash) ? e.to_a.flatten.compact : e }
-    #a=args.map!{|a| a=="--cover" ? "cover" : a }
     args.flatten!
+    #remove overloaded elements
     args.delete_if{|e| e=="--input"}
-    args.insert(1,"--use-xserver")
-    #args << '--quiet'
-
+    #add source to page section
     if @source.html?
       args.insert(args.find_index("page")+1, '-') # Get HTML from stdin
     else
       args.insert(args.find_index("page")+1, @source.to_s)
     end
-
+    #add output option
     args << (path || '-') # Write to file or stdout
+    #wrap strings into quotes
     args.map {|arg| %Q{"#{arg.gsub('"', '\"')}"}}
 
   end
@@ -124,7 +132,8 @@ class PDFKit
 
     def normalize_options(options)
       normalized_options = {}
-
+      #don`t add '--' into base sections page toc and cover but
+      #keep on normalizing every portion of data
       options.each do |key, value|
         next if !value
         if value.is_a?(Hash)
