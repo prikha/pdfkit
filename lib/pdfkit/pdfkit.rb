@@ -23,7 +23,8 @@ class PDFKit
     @stylesheets = []
 
     @options = PDFKit.configuration.default_options.merge(options)
-    @options.merge! find_options_in_meta(url_file_or_html) unless source.url?
+    @options[:page]={}
+    @options[:page].merge! find_options_in_meta(url_file_or_html) unless source.url?
     buffer=@options.select{|k,v| !v.is_a?(Hash)}
     special=@options.select{|k,v| v.is_a?(Hash)}
     @options=buffer.merge(special)
@@ -44,13 +45,14 @@ class PDFKit
     #args << '--quiet'
 
     if @source.html?
-      args << '-' # Get HTML from stdin
+      args.insert(args.find_index("page")+1, '-') # Get HTML from stdin
     else
-      args << @source.to_s
+      args.insert(args.find_index("page")+1, @source.to_s)
     end
 
     args << (path || '-') # Write to file or stdout
     args.map {|arg| %Q{"#{arg.gsub('"', '\"')}"}}
+
   end
 
   def executable
