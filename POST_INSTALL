@@ -2,13 +2,10 @@
 
 Install wkhtmltopdf:
 
-1. Install by hand (recomended):
+1. Install by hand version 0.10.2 and higher:
 
         https://github.com/pdfkit/PDFKit/wiki/Installing-WKHTMLTOPDF
 
-2. Try using the wkhtmltopdf-binary gem (mac + linux i386)
-
-        gem install wkhtmltopdf-binary
 
 
 ******************************************************************
