@@ -1,9 +1,10 @@
-#This is a fork of original [pdfkit](http://github.com/pdfkit/pdfkit) but is rewritten to work with newer versions of *wkhtmltopdf* binary
+#This is a fork of original [pdfkit](http://github.com/pdfkit/pdfkit) but is rewritten to work with newer(>0.10.2) versions of *wkhtmltopdf* binary
 # PDFKit
 
 Create PDFs using plain old HTML+CSS. Uses [wkhtmltopdf](http://github.com/antialize/wkhtmltopdf) on the back-end which renders HTML using Webkit.
 Be aware of using versions compatible with new options described in [documentation](http://madalgo.au.dk/~jakobt/wkhtmltoxdoc/wkhtmltopdf_0.10.0_rc2-doc.html)
 Those versions are (as far as i know) 0.10.2 and higher
+
 ## Install
 
 ### PDFKit
@@ -19,6 +20,14 @@ Those versions are (as far as i know) 0.10.2 and higher
     ***CHECK THE SUPPORTED VERSIONS ABOVE***
 
 *Note:* Check your version by typing ```sh wkhtmltopdf --version ```.
+
+
+#### MAC OS X
+So if you need HEAD version with fully suppoorted options just 
+ -  Grab yourself a copy of [fresh wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/downloads/detail?name=wkhtmltopdf.dmg&can=2&q=)
+ -  Open it and drag to Applications
+ -  Then `cd /usr/local/bin && ln -s /Applications/wkhtmltopdf.app/Contents/MacOS/wkhtmltopdf wkhtmltopdf`
+
 
 ## Usage
 ```ruby
