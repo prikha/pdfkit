@@ -26,7 +26,7 @@ Those versions are (as far as i know) 0.10.2 and higher
 So if you need HEAD version with fully suppoorted options just 
  -  Grab yourself a copy of [fresh wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/downloads/detail?name=wkhtmltopdf.dmg&can=2&q=)
  -  Open it and drag to Applications
- -  Then `cd /usr/local/bin && ln -s /Applications/wkhtmltopdf.app/Contents/MacOS/wkhtmltopdf wkhtmltopdf`
+ -  Then ```sh cd /usr/local/bin && ln -s /Applications/wkhtmltopdf.app/Contents/MacOS/wkhtmltopdf wkhtmltopdf ```
 
 
 ## Usage
@@ -48,7 +48,7 @@ So if you need HEAD version with fully suppoorted options just
     kit = PDFKit.new(File.new('/path/to/html'))
 
     # Add any kind of option through meta tags
-    PDFKit.new('<html><head><meta name="pdfkit-page_size" content="Letter")
+    PDFKit.new('<html><head><meta name="pdfkit-page_size" content="Letter"')
 ```
 ## Configuration
 
