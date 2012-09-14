@@ -3,6 +3,7 @@ require 'spec_helper'
 
 describe PDFKit do
 
+
   context "initialization" do
     it "should accept HTML as the source" do
       pdfkit = PDFKit.new('<h1>Oh Hai</h1>')
@@ -102,8 +103,11 @@ describe PDFKit do
         </html>
       }
       pdfkit = PDFKit.new(body)
-      pdfkit.command[pdfkit.command.index('"--page-size"') + 1].should == '"Legal"'
-      pdfkit.command[pdfkit.command.index('"--orientation"') + 1].should == '"Landscape"'
+      pdfkit.options["page"]["--page-size"].should == 'Legal'
+      pdfkit.options["page"]["--orientation"].should == 'Landscape'
+      #old test on command - but now it only overrides the actual page options
+      #pdfkit.command[pdfkit.command.index('"--orientation"') + 1].should == '"Landscape"'
+      #pdfkit.command[pdfkit.command.index('"--page-size"') + 1].should == '"Letter"'
     end
 
     it "should detect special pdfkit meta tags despite bad markup" do
@@ -117,8 +121,11 @@ describe PDFKit do
         </html>
       }
       pdfkit = PDFKit.new(body)
-      pdfkit.command[pdfkit.command.index('"--page-size"') + 1].should == '"Legal"'
-      pdfkit.command[pdfkit.command.index('"--orientation"') + 1].should == '"Landscape"'
+      pdfkit.options["page"]["--page-size"].should == 'Legal'
+      pdfkit.options["page"]["--orientation"].should == 'Landscape'
+      #old test on command - but now it only overrides the actual page options
+      #pdfkit.command[pdfkit.command.index('"--orientation"') + 1].should == '"Landscape"'
+      #pdfkit.command[pdfkit.command.index('"--page-size"') + 1].should == '"Letter"'
     end
 
     it "should skip non-pdfkit meta tags" do
@@ -132,7 +139,9 @@ describe PDFKit do
         </html>
       }
       pdfkit = PDFKit.new(body)
-      pdfkit.command[pdfkit.command.index('"--orientation"') + 1].should == '"Landscape"'
+      pdfkit.options["page"]["--orientation"].should == 'Landscape'
+      #old test on command - but now it only overrides the actual page options
+      #pdfkit.command[pdfkit.command.index('"--orientation"') + 1].should == '"Landscape"'
     end
 
   end
