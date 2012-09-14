@@ -26,7 +26,8 @@ Those versions are (as far as i know) 0.10.2 and higher
 So if you need HEAD version with fully suppoorted options just 
  -  Grab yourself a copy of [fresh wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/downloads/detail?name=wkhtmltopdf.dmg&can=2&q=)
  -  Open it and drag to Applications
- -  Then ```sh cd /usr/local/bin && ln -s /Applications/wkhtmltopdf.app/Contents/MacOS/wkhtmltopdf wkhtmltopdf ```
+ -  Then 
+`cd /usr/local/bin && ln -s /Applications/wkhtmltopdf.app/Contents/MacOS/wkhtmltopdf wkhtmltopdf `
 
 
 ## Usage
